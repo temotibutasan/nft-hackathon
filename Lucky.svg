@@ -1,7 +1,5 @@
 <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
   <rect stroke="#000" id="svg_4" height="600" width="800" y="0" x="0" opacity="NaN" stroke-width="0" fill="#FFB27C"/>
-  <rect fill="#fff" stroke="#000" x="163.6" y="214.4" width="0" height="1" id="svg_2"/>
-  <rect fill="#fff" stroke="#000" x="199.6" y="204.4" width="0" height="1" id="svg_3"/>
   <text font-style="italic" font-weight="bold" fill="#000000" x="112.32814" y="359.14696" id="svg_6" stroke-width="0" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve" stroke="#000" transform="matrix(2.60693 0 0 2.49236 -238.02 -397.61)">おめでとうございます！</text>
   <ellipse fill="#FFF093" cx="384.1" cy="252.4" id="svg_14" rx="146.5" ry="142" stroke="#000"/>
   <ellipse fill="#ffffff" cx="384.1" cy="252.40002" id="svg_15" rx="133.49999" ry="129.99998" stroke="#000"/>
