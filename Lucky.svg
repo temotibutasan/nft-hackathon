@@ -1,7 +1,5 @@
 <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
- <g>
-  <title>Layer 1</title>
-  <rect stroke="#000" id="svg_4" height="568.99998" width="835.99993" y="33.8" x="-7.39993" opacity="NaN" stroke-width="0" fill="#FFB27C"/>
+  <rect stroke="#000" id="svg_4" height="600" width="800" y="0" x="0" opacity="NaN" stroke-width="0" fill="#FFB27C"/>
   <rect fill="#fff" stroke="#000" x="163.6" y="214.4" width="0" height="1" id="svg_2"/>
   <rect fill="#fff" stroke="#000" x="199.6" y="204.4" width="0" height="1" id="svg_3"/>
   <text font-style="italic" font-weight="bold" fill="#000000" x="112.32814" y="359.14696" id="svg_6" stroke-width="0" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve" stroke="#000" transform="matrix(2.60693 0 0 2.49236 -238.02 -397.61)">おめでとうございます！</text>
@@ -39,6 +37,4 @@
   <text fill="#A8FFE9" x="389.6" y="262.9289" id="svg_58" font-size="24" font-family="Noto Sans JP" text-anchor="start" xml:space="preserve" stroke="#000" transform="matrix(2.59226 0 0 2.81396 -686.558 -457.427)">景品</text>
   <path fill="#ffffff" d="m433.71707,98.17729l-10.81718,7.55683l4.13498,-12.22394l-10.81475,-7.55682l13.36806,0.00234l3.55297,-10.51095l0.57958,-1.70713l4.12767,12.21574l13.37172,0l-10.81962,7.55682l4.1362,12.22745l-10.81963,-7.56034l0,0z" id="svg_59" stroke="#000"/>
   <path fill="#ffffff" d="m381.71707,94.17729l-10.81718,7.55683l4.13498,-12.22394l-10.81475,-7.55682l13.36806,0.00234l3.55297,-10.51095l0.57958,-1.70713l4.12767,12.21574l13.37172,0l-10.81962,7.55682l4.1362,12.22745l-10.81963,-7.56034l0,0z" id="svg_60" stroke="#000"/>
- </g>
-
 </svg>
