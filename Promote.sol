@@ -6,7 +6,6 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract NFT is ERC721Enumerable, Ownable {
-
   struct UserStruct {
     uint index;
   }
@@ -14,27 +13,19 @@ contract NFT is ERC721Enumerable, Ownable {
   address[] private userIndex;
   address[] private luckyAddress;
 
-
   using Strings for uint256;
-  // https://gateway.pinata.cloud/ipfs/QmQtfYemFqU7sWW4mPK9LdBeDozDHLsN2VmikqpZRYwGXq?filename=Lucky.svg
-  string public luckyUri;
-  // https://gateway.pinata.cloud/ipfs/QmS8KvUTmRzQQr5QPPKaTZWTWxrvXQfewqMN4jXz3X3KFr/UnLucky.svg
-  string public unLuckyUri;
-  string public drewUri;
   uint256 public maxSupply = 1;
   uint256 public maxLucky = 10;
   uint256 public probability = 3000;
   uint256 public drawingResult = 2;
 
-  constructor(
-    string memory _initLuckyUri,
-    string memory _initUnLuckyUri,
-    string memory _initDrewUri
-  ) ERC721("PromoteNft", "PMNFT") {
-    setLuckyURI(_initLuckyUri);
-    setUnLuckyURI(_initUnLuckyUri);
-    setDrewURI(_initDrewUri);
+  constructor() ERC721("PromoteNft", "PMNFT") {
     mint(1);
+  }
+
+  // internal
+  function _baseURI() internal pure override returns (string memory) {
+      return "https://gateway.pinata.cloud/ipfs/QmaeoJwShoQJYrPdaiifZUwLbKNoPFzPcdcKNT2nDNBJMR/";
   }
 
   function mint(uint256 _mintAmount) public payable {
@@ -47,40 +38,12 @@ contract NFT is ERC721Enumerable, Ownable {
     }
   }
 
-  function tokenURI(uint256 tokenId)
-    public
-    view
-    virtual
-    override
-    returns (string memory)
-  {
-    require(
-      _exists(tokenId),
-      "ERC721Metadata: URI query for nonexistent token"
-    );
-    
-    if(drawingResult == 0){
-      return drewUri;
-    }
-    else if(drawingResult == 1){
-        return luckyUri;
-    } else{
-        return unLuckyUri;
-    }
+  function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+      require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
+      string memory baseURI = _baseURI();
+      string memory resultURI = drawingResult == 0 ? "lucky.json":"unlucky.json"; 
+      return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI,resultURI)) : "";
   }
-  
-  function setLuckyURI(string memory _newURI) private onlyOwner {
-    luckyUri = _newURI;
-  }
-
-  function setUnLuckyURI(string memory _newURI) private onlyOwner {
-    unLuckyUri = _newURI;
-  }
-
-  function setDrewURI(string memory _newURI) private onlyOwner {
-    drewUri = _newURI;
-  }
-
 
   function transferFrom(
     address from,
@@ -89,25 +52,20 @@ contract NFT is ERC721Enumerable, Ownable {
   ) public virtual override {
     //solhint-disable-next-line max-line-length
     require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721: transfer caller is not owner nor approved");
-
-    if(isUser(to)) {
-        drawingResult = 0;
-    } else {
-        drawingResult = drawing(tokenId)? 1:2;
-        if(drawingResult == 1){
-            luckyAddress.push(to);
-        }
-        userIndex.push(to);
-    }
+    updateResult(to,tokenId);
     _transfer(from, to, tokenId);
   }
 
-  function safeTransferFrom(
-        address from,
-        address to,
-        uint256 tokenId
-  ) public virtual override {
-    safeTransferFrom(from, to, tokenId, "");
+  function updateResult(address to,uint256 tokenId) public {
+    if(isUser(to)) {
+      drawingResult = 0;
+    } else {
+      drawingResult = drawing(tokenId)? 1:2;
+      if(drawingResult == 1){
+          luckyAddress.push(to);
+      }
+      userIndex.push(to);
+    }
   }
 
   function random(string memory input) internal pure returns (uint256) {
@@ -118,7 +76,6 @@ contract NFT is ERC721Enumerable, Ownable {
     view
     returns (bool) 
   {
-
     if(luckyAddress.length >= maxLucky){
         return false;
     }
@@ -147,7 +104,7 @@ contract NFT is ERC721Enumerable, Ownable {
       return true;
   }
 
-    function toString(uint256 value) internal pure returns (string memory) {
+  function toString(uint256 value) internal pure returns (string memory) {
   // Inspired by OraclizeAPI's implementation - MIT license
   // https://github.com/oraclize/ethereum-api/blob/b42146b063c7d6ee1358846c198246239e9360e8/oraclizeAPI_0.4.25.sol
 
