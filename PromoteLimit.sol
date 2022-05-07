@@ -13,18 +13,18 @@ contract NFT is ERC721Enumerable, Ownable {
 
   using Strings for uint256;
   uint256 public maxSupply = 1;
-  uint256 public maxLucky = 10;
+  uint256 public maxLucky = 1;
   uint256 public probability = 10;
   uint256 public drawingResult = 2;
 
   constructor() ERC721("PromoteNft", "PMNFT") {
-    userIndex = new address[](100);
+    userIndex = new address[](maxHistory);
     mint(1);
   }
 
   // internal
   function _baseURI() internal pure override returns (string memory) {
-      return "https://gateway.pinata.cloud/ipfs/QmaeoJwShoQJYrPdaiifZUwLbKNoPFzPcdcKNT2nDNBJMR/";
+      return "https://gateway.pinata.cloud/ipfs/QmRKVo5vtSx1F37FY1z6WVmQetmckfF3r6ybMyuUA2FEWd/";
   }
 
   function mint(uint256 _mintAmount) public payable {
@@ -71,6 +71,12 @@ contract NFT is ERC721Enumerable, Ownable {
     return uint256(keccak256(abi.encodePacked(input)));
   }
 
+  function getReward() public view returns (bool) {
+    require(isLucyUser(msg.sender), "You are not LucyUser");
+    // todo: 報酬付与処理
+    return true;
+  }
+
   function drawing(uint256 tokenId) private
     view
     returns (bool) 
@@ -98,7 +104,7 @@ contract NFT is ERC721Enumerable, Ownable {
   }
 
   function insertUser(address userAddress) private
-  returns(bool)
+    returns(bool)
   {
       if(isUser(userAddress)) return false;
       userIndex[userIndexOffset] = userAddress;
@@ -107,6 +113,17 @@ contract NFT is ERC721Enumerable, Ownable {
         userIndexOffset = 0;
       }
       return true;
+  }
+
+  function isLucyUser(address userAddress)  public
+    view
+    returns (bool) 
+  {
+    if(luckyAddress.length == 0) return false;
+    for(uint256 i=0; i < maxLucky; i++) {
+      if(luckyAddress[i] == userAddress) return true;
+    }
+    return false;
   }
 
   function toString(uint256 value) internal pure returns (string memory) {
